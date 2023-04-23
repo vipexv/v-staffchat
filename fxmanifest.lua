@@ -5,12 +5,10 @@ description 'V-Staff Chat'
 fx_version '1.1'
 
 client_scripts {
-	-- "configs/*",
 	"client/*",
 }
 
 server_scripts {
-	-- "configs/*",
 	"server/*",
 }
 
