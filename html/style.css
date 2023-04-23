@@ -68,14 +68,6 @@ body {
   padding: 10px;
 }
 
-.testing {
-  width: 10vh;
-  height: 10vh;
-  position: absolute;
-  background-color: black;
-  border-radius: 0.4vh;
-  color: white;
-}
 .onlinestaff {
   position: absolute;
   font-size: 11px;
