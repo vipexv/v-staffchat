@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>V-Staff Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div class="chatbox" style="display: none;">
+    <header class="header">  <i class="fa-solid fa-user-plus"></i> <span class="navtext">| Staff Chat</span>
+      <p class="onlinestaff"></p>
+      <span class="exit">X</span>
+    </header>
+      <div class="chatlog"></div>
+      <form class="form">
+        <input type="text" class="message-input input" placeholder="Tip: Use /clear or /image [url]">
+        <button type="submit" class="send-btn">Send</button>
+      </form>
+    </div>
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+  </body>
+</html>
