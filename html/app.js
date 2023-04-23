@@ -3,7 +3,7 @@ let staffList = null;
 let chatlog = null;
 let lastMessageTime = 0;
 let draggable = false;
-const delayBetweenMessages = 1000; // 1 second(s)
+const delayBetweenMessages = 1000; // Don't Remove this delay, you can set it higher but don't set it to 0.
 
 $(document).ready(function () {
   interact('.chatbox')
