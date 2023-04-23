@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 author 'vipex#2027'
 description 'V-Staff Chat'
-fx_version '1.01'
+fx_version '1.1'
 
 client_scripts {
 	-- "configs/*",
