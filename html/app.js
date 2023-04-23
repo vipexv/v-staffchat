@@ -2,7 +2,38 @@ let messageListener = null;
 let staffList = null;
 let chatlog = null;
 let lastMessageTime = 0;
+let draggable = false;
 const delayBetweenMessages = 1000; // 1 second(s)
+
+$(document).ready(function () {
+  interact('.chatbox')
+    .draggable({
+      inertia: true,
+      autoScroll: true,
+      enabled: draggable,
+      listeners: {
+        move: dragMoveListener,
+
+        start(event) {
+          event.target.classList.add('dragging');
+        },
+        end(event) {
+          event.target.classList.remove('dragging');
+        }
+      }
+    });
+
+  function dragMoveListener(event) {
+    var target = event.target
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+    target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+    target.setAttribute('data-x', x)
+    target.setAttribute('data-y', y)
+  }
+});
 
 function notify(message) {
   const notification = document.createElement('div');
@@ -48,23 +79,22 @@ function addMessage(sourcename, message, playername) {
   if (lastMessageContent !== `[${sourcename}]: ${message}` || currentTime - lastMessageTime >= delayBetweenMessages) {
     const messageElement = document.createElement('div');
     if (message.toLowerCase() === "/clear") {
-    notify('Cleared the Chat!')
-    chatlog.innerHTML = "";
-    return;
+      notify('Cleared the Chat!')
+      chatlog.innerHTML = "";
+      return;
     }
-      if (sourcename !== playername) {
-        messageElement.classList.add('message', 'received');
-        messageElement.textContent = `[${sourcename}]: ${message}`;
-      } else {
-        messageElement.classList.add('message', 'sent');
-        messageElement.textContent = `[${sourcename}]: ${message}`;
-      }
-  
+    if (sourcename !== playername) {
+      messageElement.classList.add('message', 'received');
+      messageElement.textContent = `[${sourcename}]: ${message}`;
+    } else {
+      messageElement.classList.add('message', 'sent');
+      messageElement.textContent = `[${sourcename}]: ${message}`;
+    }
+
     chatlog.appendChild(messageElement);
     chatlog.scrollTop = chatlog.scrollHeight;
 
     lastMessageTime = currentTime;
-  // }
   }
 };
 
@@ -74,8 +104,6 @@ window.addEventListener('message', function (event) {
     const form = document.querySelector('form');
     const messageInput = document.querySelector('.message-input');
     chatlog = document.querySelector('.chatlog');
-    // const playername = event.data.playername;
-    // const status = event.data.status;
     staffList = event.data.staff;
     $('.onlinestaff').html(`Online Staff: [${staffList}]`);
     $('.exit').click(function () {
@@ -137,6 +165,20 @@ function ShowAll() {
   $('.chatbox').show();
   $('body').show();
 };
+
+$(document).ready(function() {
+  $('.drag-button').click(function () {
+    if (draggable) {
+      notify('Drag Mode Disabled.');
+      draggable = false;
+      interact('.chatbox').draggable({ enabled: draggable });
+    } else {
+      notify('Drag Mode Enabled.');
+      draggable = true;
+      interact('.chatbox').draggable({ enabled: draggable });
+    }
+  });
+})
 
 function playsound() {
   $("<audio></audio>").attr({
