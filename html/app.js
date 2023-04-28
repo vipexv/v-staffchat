@@ -3,7 +3,9 @@ let staffList = null;
 let chatlog = null;
 let lastMessageTime = 0;
 let draggable = false;
-const delayBetweenMessages = 1000; // Don't Remove this delay, you can set it higher but don't set it to 0.
+let notisoff = false;
+const delayBetweenMessages = 1000; // 1 second(s)
+const delayBetweenNotifications = 100;
 
 $(document).ready(function () {
   interact('.chatbox')
@@ -25,17 +27,22 @@ $(document).ready(function () {
 
   function dragMoveListener(event) {
     var target = event.target
+    // keep the dragged position in the data-x/data-y attributes
     var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
     var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
+    // translate the element
     target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
 
+    // update the posiion attributes
     target.setAttribute('data-x', x)
     target.setAttribute('data-y', y)
   }
 });
 
 function notify(message) {
+  const checktime = new Date().getTime();
+  if (!notisoff && checktime - lastMessageTime >= delayBetweenNotifications) {
   const notification = document.createElement('div');
   const notificationmessage = document.createElement('div');
   notification.classList.add('notificationdiv');
@@ -48,6 +55,8 @@ function notify(message) {
   setTimeout(() => {
     document.body.removeChild(notification);
   }, 2000);
+    lastMessageTime = checktime;
+  }
 };
 
 function addImage(sourcename, imagelink) {
@@ -57,18 +66,19 @@ function addImage(sourcename, imagelink) {
   chatlog.appendChild(image);
   messageElement.classList.add('message', 'received');
   messageElement.textContent = `Image Sent By: [${sourcename}]`;
-  chatlog.appendChild(messageElement)
+  messageElement.appendChild(image); // remove the duplicate chatlog.appendChild
   image.addEventListener('click', () => {
     if (image.classList.contains('activeimg')) {
       image.classList.remove('activeimg');
-      chatlog.appendChild(image);
+      messageElement.appendChild(image);
     } else {
       image.classList.add('activeimg');
       document.body.appendChild(image);
     }
   });
+  chatlog.appendChild(messageElement);
   chatlog.scrollTop = chatlog.scrollHeight;
-};
+}
 
 function addMessage(sourcename, message, playername) {
   const messages = chatlog.querySelectorAll('.message');
@@ -81,6 +91,7 @@ function addMessage(sourcename, message, playername) {
     if (message.toLowerCase() === "/clear") {
       notify('Cleared the Chat!')
       chatlog.innerHTML = "";
+      $('img').attr('src', 'nil');
       return;
     }
     if (sourcename !== playername) {
@@ -105,10 +116,42 @@ window.addEventListener('message', function (event) {
     const messageInput = document.querySelector('.message-input');
     chatlog = document.querySelector('.chatlog');
     staffList = event.data.staff;
+    $('#drag').change(function () {
+      if ($(this).is(':checked')) {
+        notify('Drag Mode Enabled.');
+        draggable = true;
+        interact('.chatbox').draggable({ enabled: draggable });
+      } else {
+        notify('Drag Mode Disabled.');
+        draggable = false;
+        interact('.chatbox').draggable({ enabled: draggable });
+      }
+    });
+    $('#notifications').change(function () {
+      if ($(this).is(':checked')) {
+        notify('Notifications Disabled');
+        notisoff = true;
+      } else {
+        notify('Notifications Enabled');
+        notisoff = false;
+      }
+    });
     $('.onlinestaff').html(`Online Staff: [${staffList}]`);
-    $('.exit').click(function () {
+    $('#chatbox-exit').click(function () {
       CloseAll()
     });
+    $('#settings-exit').click(function () {
+      $('.settingsbox').hide("fold", 500);
+    });
+    // if ($('#drag').prop('checked')) {
+    //   notify('Drag Mode Enabled.');
+    //   draggable = true;
+    //   interact('.chatbox').draggable({ enabled: draggable });
+    // } else {
+    // notify('Drag Mode Disabled.');
+    // draggable = false;
+    // interact('.chatbox').draggable({ enabled: draggable });
+    // }
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       const message = messageInput.value.trim();
@@ -118,8 +161,8 @@ window.addEventListener('message', function (event) {
       }
       else if (message) {
         $.post(`https://${GetParentResourceName()}/messagesent`, JSON.stringify(message));
-        messageInput.value = '';
       }
+      messageInput.value = '';
     });
   }
   if (event.data.type === "sendmessage") {
@@ -127,14 +170,25 @@ window.addEventListener('message', function (event) {
     const sourcename = event.data.sourcename;
     const message = event.data.message;
     const playername = event.data.playername;
-    addMessage(sourcename, message, playername);
+    if ($('.chatbox').is(':visible')) {
+      addMessage(sourcename, message, playername);
+    } else {
+      notify(`${sourcename} Sent a New Message!`)
+      addMessage(sourcename, message, playername);
+    }
     messageInput.value = '';
   }
   if(event.data.type === "sendimage") {
     const messageInput = document.querySelector('.message-input');
     const sourcename = event.data.srcname;
     const imagelink = event.data.imagelink;
-    addImage(sourcename, imagelink);
+    if ($('.chatbox').is(':visible')) {
+      addImage(sourcename, imagelink);
+    } else {
+      notify(`${sourcename} Sent a New Image!`)
+      addImage(sourcename, imagelink);
+    }
+    // addImage(sourcename, imagelink);
     messageInput.value = '';
   } 
 });
@@ -161,21 +215,17 @@ $(document).keyup((e) => {
 });
 
 function ShowAll() {
-  $('.chatbox').removeClass('hidden');
-  $('.chatbox').show();
+  $('.chatbox').show("scale", 200);
   $('body').show();
 };
 
 $(document).ready(function() {
-  $('.drag-button').click(function () {
-    if (draggable) {
-      notify('Drag Mode Disabled.');
-      draggable = false;
-      interact('.chatbox').draggable({ enabled: draggable });
-    } else {
-      notify('Drag Mode Enabled.');
-      draggable = true;
-      interact('.chatbox').draggable({ enabled: draggable });
+  $('.open-settings').click(function () {
+    if ($('.settingsbox').is(":visible")) {
+    $('.settingsbox').hide('fold', 500);
+    }
+    else {
+    $('.settingsbox').show('fold', 500);
     }
   });
 })
@@ -189,15 +239,7 @@ function playsound() {
 };
 
 function CloseAll() {
-  $('.chatbox').addClass('hidden');
-  setTimeout(function () {
-    $('.chatbox').hide();
-    $('body').hide();
-  }, 200);
+  $(".chatbox").hide("scale", 200);
+  $(".settingsbox").hide("scale", 200);
   $.post(`https://${GetParentResourceName()}/exit`, JSON.stringify({}));
-};
-
-function isImageUrl(url) {
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
-  return imageExtensions.some(ext => url.endsWith(ext));
 };

@@ -15,12 +15,14 @@ AddEventHandler('messagerecieved', function(data)
             local xPlayers = GetPlayers()
             local players = {}
             for i=1, #xPlayers, 1 do
+            if IsPlayerAceAllowed(xPlayers[i], Config.AcePerm) then
             table.insert(players, {
                 sourcex = xPlayers[i],
                 name = GetPlayerName(xPlayers[i]),
             })
-        end
-    TriggerClientEvent('sendmessage', -1, data, sourcename, players)
+           TriggerClientEvent('sendmessage', -1, data, sourcename, players)
+       end
+    end
 end)
 
 AddEventHandler('imagereceived', function(data)
