@@ -28,18 +28,21 @@
       </form>
     </div>
     </div>
-    <div class="settingsbox" style="display: none;">
-        <header class="settingsheader"><i class="fa-solid fa-gears"></i> | Settings
-             <span class="exit" id="settings-exit">X</span>
-            </header>
-        <div class="options">
-          <input type="checkbox" id="notifications">
-          <label for="notifications">Disable Notifications</label>
-        </div>
-        <div class="testing">
-        <input type="checkbox" id="drag">
-        <label for="drag">Drag Mode</label>
-        </div>
+  <div class="settingsbox" style="display: none;">
+    <header class="settingsheader">
+      <i class="fa-solid fa-gears"></i> | Settings
+      <span class="exit" id="settings-exit">X</span>
+    </header>
+    <div class="options">
+      <div class="option-item">
+        <input type="checkbox" id="notifications" class="hidden-checkbox">
+        <label for="notifications" class="checkbox-label">Disable Notifications</label>
+      </div>
+      <div class="option-item">
+        <input type="checkbox" id="drag" class="hidden-checkbox">
+        <label for="drag" class="checkbox-label">Drag Mode</label>
+      </div>
     </div>
+  </div>
   </body>
 </html>

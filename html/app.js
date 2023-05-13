@@ -60,6 +60,7 @@ function notify(message) {
 };
 
 function addImage(sourcename, imagelink) {
+  if (!imagelink) return notify('Please Insert a Valid Image Link.')
   const image = document.createElement('img');
   const messageElement = document.createElement('div');
   image.setAttribute('src', imagelink);
@@ -141,7 +142,7 @@ window.addEventListener('message', function (event) {
       CloseAll()
     });
     $('#settings-exit').click(function () {
-      $('.settingsbox').hide("fold", 500);
+      $('.settingsbox').hide("scale", 200);
     });
     // if ($('#drag').prop('checked')) {
     //   notify('Drag Mode Enabled.');
@@ -208,7 +209,7 @@ $(document).on('dataReceived', function (event, data) {
   }
 });
 
-$(document).keyup((e) => {
+$(document).keydown((e) => {
   if (e.key === "Escape") {
     CloseAll()
   }
@@ -222,10 +223,10 @@ function ShowAll() {
 $(document).ready(function() {
   $('.open-settings').click(function () {
     if ($('.settingsbox').is(":visible")) {
-    $('.settingsbox').hide('fold', 500);
+    $('.settingsbox').hide('scale', 200);
     }
     else {
-    $('.settingsbox').show('fold', 500);
+    $('.settingsbox').show('scale', 200);
     }
   });
 })

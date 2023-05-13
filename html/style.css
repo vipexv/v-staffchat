@@ -96,8 +96,8 @@ body {
 .exit {
   position: absolute;
   margin-left: 90%;
-  top: 2%;
-  right: 2%;
+  top: 1%;
+  right: 1%;
   padding: 5px 5px;
   text-align: center;
   transition: all 200ms ease-in-out;
@@ -331,9 +331,11 @@ button:hover {
   border-radius: 0.4vh;
   align-content: center;
   justify-content: center;
-  margin-left: 50%;
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 10px 10px;
-  margin-top: 1%;
   animation: entrance 200ms forwards;
   display: flex;
   flex-direction: column;
@@ -343,54 +345,111 @@ button:hover {
 
 .settingsbox {
   max-width: 500px;
-  width: 15%;
+  width: 20%;
   background-color: transparent;
   max-height: 500px;
-  height: 15%;
+  height: auto;
   position: absolute;
   border-radius: 0.4vh;
   top: 50%;
-  left: 0%;
+  left: 1%;
+  transform: translate(-50%,);
+  display: flex;
+  flex-direction: column;
+}
+
+.options input[type="checkbox"] {
+  font-family: Poppins;
 }
 
 .settingsheader {
-  background-color: #40414fea;
+  background-color: #333;
   text-align: left;
   color: white;
   font-size: 16px;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 1px;
-  height: 14%;
-  width: 95%;
+  width: 100%;
   text-align: left;
   border-radius: 0.4vh;
-  margin-left: 1%;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.settingsheader i {
+  margin-right: 10px;
+}
+
+.settingsheader .exit {
+  margin-left: 0%;
+  cursor: pointer;
 }
 
 label {
   color: white;
   font-size: 15px;
   text-transform: uppercase;
+  display: inline-block;
+  margin-left: 1%;
+  transition: color 400ms ease;
 }
 
 .options {
-  padding: 10px 10px;
-  background-color: #40414fea;
+  padding: 10px;
+  background-color: #333;
   margin-top: 1%;
-  width: 95%;
-  margin-left: 1%;
+  width: 100%;
   text-align: center;
   border-radius: 0.4vh;
 }
 
+.option-item {
+  margin-bottom: 10px;
+}
+
 .testing {
-  padding: 10px 10px;
-  background-color: #40414fea;
+  padding: 10px;
+  background-color: #333;
   margin-top: 1%;
-  width: 95%;
-  height: fit-content;
+  width: 100%;
   text-align: center;
-  margin-left: 1%;
   border-radius: 0.4vh;
+}
+
+.dark-mode {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark-mode label {
+  color: #fff;
+}
+
+.dark-mode .settingsheader {
+  background-color: #111;
+}
+
+.dark-mode .options,
+.dark-mode .testing {
+  background-color: #111;
+}
+.option-item {
+  margin-top: 10px;
+}
+
+.hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox-label {
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.hidden-checkbox:checked + label {
+  color: #2196F3 !important;
 }
