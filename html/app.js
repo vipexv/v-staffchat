@@ -67,7 +67,7 @@ function addImage(sourcename, imagelink) {
   chatlog.appendChild(image);
   messageElement.classList.add('message', 'received');
   messageElement.textContent = `Image Sent By: [${sourcename}]`;
-  messageElement.appendChild(image); // remove the duplicate chatlog.appendChild
+  messageElement.appendChild(image);
   image.addEventListener('click', () => {
     if (image.classList.contains('activeimg')) {
       image.classList.remove('activeimg');
