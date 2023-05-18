@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 author 'vipex#2027'
-description 'V-Staff Chat'
+description 'V-Staff Chat [Alpha]'
 fx_version '1.3'
 
 client_scripts {
