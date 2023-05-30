@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
 
 body {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   /* background-color: black; */
 }
 
 * {
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 ::-webkit-scrollbar {
@@ -40,8 +40,7 @@ body {
   background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
-  /* overflow: hidden; */
-  /* transition: all 200ms ease-in-out; */
+  overflow: hidden;
   border-radius: 4px;
 }
 
@@ -103,7 +102,6 @@ body {
   transition: all 200ms ease-in-out;
 }
 
-
 .exit:hover {
   background-color: red;
   border-radius: 4px;
@@ -129,7 +127,7 @@ body {
 .sent {
   width: auto;
   flex-direction: column;
-  background-color: #2196F3;
+  background-color: #2196f3;
   align-self: flex-end;
   color: white;
 }
@@ -214,7 +212,7 @@ input:focus {
 }
 
 .chatlog .message.sent {
-  background-color: #2196F3;
+  background-color: #2196f3;
   float: right;
   color: #fff;
 }
@@ -283,7 +281,7 @@ button {
   text-align: center;
   text-transform: uppercase;
   font-size: 16px;
-  transition: .3s;
+  transition: 0.3s;
   z-index: 1;
   font-family: inherit;
   color: white;
@@ -291,7 +289,7 @@ button {
 }
 
 button::before {
-  content: '';
+  content: "";
   width: 0%;
   height: 300%;
   position: absolute;
@@ -299,7 +297,7 @@ button::before {
   left: 50%;
   transform: translate(-50%, -50%) rotate(0deg);
   background-color: rgba(0, 0, 0, 0.8);
-  transition: .4s ease;
+  transition: 0.4s ease;
   display: block;
   z-index: -1;
 }
@@ -312,7 +310,6 @@ button:hover {
   color: white;
 }
 
-
 @keyframes entrance {
   from {
     transform: scale(0);
@@ -322,7 +319,6 @@ button:hover {
     transform: scale(1);
   }
 }
-
 
 .notificationdiv {
   background-color: #40414f;
@@ -353,7 +349,7 @@ button:hover {
   border-radius: 0.4vh;
   top: 50%;
   left: 1%;
-  transform: translate(-50%,);
+  transform: translate(-50%);
   display: flex;
   flex-direction: column;
 }
@@ -451,5 +447,5 @@ label {
 }
 
 .hidden-checkbox:checked + label {
-  color: #2196F3 !important;
+  color: #2196f3 !important;
 }
