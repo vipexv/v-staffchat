@@ -164,12 +164,12 @@ window.addEventListener("message", function (event) {
     const sourcename = event.data.sourcename;
     const message = event.data.message;
     const playername = event.data.playername;
-    if ($(".chatbox").is(":visible")) {
-      addMessage(sourcename, message, playername);
-    } else {
-      notify(`${sourcename} Sent a New Message!`);
-      addMessage(sourcename, message, playername);
-    }
+    // if ($(".chatbox").is(":visible")) {
+    addMessage(sourcename, message, playername);
+    // } else {
+      // notify(`${sourcename} Sent a New Message!`);
+      // addMessage(sourcename, message, playername);
+    // }
     messageInput.value = "";
   }
   if (event.data.type === "sendimage") {
